@@ -1,0 +1,14 @@
+{
+  "name": "atom-sfdc-ba",
+  "main": "./lib/atom-sfdc-ba",
+  "version": "0.0.0",
+  "description": "A short description of your package",
+  "activationEvents": ["atom-sfdc-ba:toggle"],
+  "repository": "https://github.com/atom/atom-sfdc-ba",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+  }
+}
