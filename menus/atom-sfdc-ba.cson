@@ -1,7 +1,7 @@
 # See https://atom.io/docs/latest/creating-a-package#menus for more details
 'context-menu':
   '.overlayer':
-      'Enable atom-sfdc-ba': 'atom-sfdc-ba:toggle'
+    'Enable atom-sfdc-ba': 'atom-sfdc-ba:toggle'
 
 'menu': [
   {
