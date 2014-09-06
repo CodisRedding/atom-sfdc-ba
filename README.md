@@ -1,3 +1,5 @@
+[![Coverage Status](https://img.shields.io/coveralls/mtetlow/atom-sfdc-ba.svg)](https://coveralls.io/r/mtetlow/atom-sfdc-ba)
+
 # atom-sfdc-ba package
 
 A short description of your package.
