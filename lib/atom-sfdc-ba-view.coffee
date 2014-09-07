@@ -1,6 +1,6 @@
 {View} = require 'atom'
 
-#AtomSfdcBaMenuChoicesView = require './atom-sfdc-ba-menu-choices-view'
+AtomSfdcBaMenuChoicesView = require './atom-sfdc-ba-menu-choices-view'
 
 module.exports =
 class AtomSfdcBaView extends View
@@ -55,12 +55,12 @@ class AtomSfdcBaView extends View
           zipFiles.push possibleConversionFile if /<contentType>(application\/zip|application\/x-zip-compressed)<\/contentType>/.test(data)
           if count is possibleConversionFiles.length
             if zipFiles.length
-              #displayZipFiles zipFiles
+              displayZipFiles zipFiles
               console.log zipFiles
           return
       return
 
-    #displayZipFiles = (zipFiles) ->
-    #  menuView = new AtomSfdcBaMenuChoicesView(zipFiles)
-    #  console.log menuView
-    #  atom.workspaceView.append(menuView)
+    displayZipFiles = (zipFiles) ->
+     menuView: new AtomSfdcBaMenuChoicesView(zipFiles)
+     console.log menuView
+     atom.workspaceView.append(menuView)
