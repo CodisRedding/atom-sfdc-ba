@@ -1,56 +1,68 @@
 {allowUnsafeEval, allowUnsafeNewFunction} = require 'loophole'
 keypair = require 'self-signed'
-_Hapi = null
+
 fs = require 'fs'
 path = require 'path'
+file = require 'file'
 
-allowUnsafeNewFunction ->
-  _Hapi ?= require 'hapi'
+class LocalHttpsServer
+  _Hapi = null
 
-# setup tls options for server
-tlsOptions = null
-key = path.join(__dirname, 'server.key')
-cert = path.join(__dirname, 'server.cert')
+  constructor: ->
+    allowUnsafeNewFunction ->
+      _Hapi ?= require 'hapi'
 
-# use certs that already exists
-if fs.existsSync(key) and fs.existsSync(cert)
-  tlsOptions =
-    key: fs.readFileSync(key)
-    cert: fs.readFileSync(cert)
-else
-  # generate self-signed cert
-  options = keypair(
-    name: "localhost"
-    city: "Nashville10"
-    state: "Tennessee"
-    organization: "atom-sfdc-ba"
-    unit: "atom-sfdc-ba"
-  ,
-    alt: ["127.0.0.1"])
+  # setup tls options for server
+  tlsOptions = null
+  key = path.normalize("#{__dirname}/../cert/server.key")
+  cert = path.normalize("#{__dirname}/../cert/server.cert")
 
-  tlsOptions =
-    key: options.private
-    cert: options.cert
+  console.debug key
 
-  fs.writeFileSync(key, options.private)
-  fs.writeFileSync(cert, options.cert)
+  # use certs that already exists
+  if fs.existsSync(key) and fs.existsSync(cert)
+    tlsOptions =
+      key: fs.readFileSync(key)
+      cert: fs.readFileSync(cert)
+  else
+    # generate self-signed cert
+    options = keypair(
+      name: "localhost"
+      city: "Nashville11"
+      state: "Tennessee"
+      organization: "atom-sfdc-ba"
+      unit: "atom-sfdc-ba"
+    ,
+      alt: ["127.0.0.1"])
 
-files =
-  relativeTo: __dirname
+    tlsOptions =
+      key: options.private
+      cert: options.cert
 
-_server = new _Hapi.Server('localhost', 8080, { tls: tlsOptions, files: files })
-_server.route
-  method: 'GET'
-  path: '/resources/{path*}'
-  handler:
-    directory:
-      path: './resources'
+    file.mkdirsSync path.dirname(key)
+    file.mkdirsSync path.dirname(cert)
 
-_server.on 'close', (err, res) ->
-  console.debug 'close'
+    fs.writeFile key, options.private, (err, res) ->
+    fs.writeFile cert, options.cert, (err, res) ->
 
-_server.start ->
-  console.log('Server running at:', _server.info.uri)
+  files =
+    relativeTo: __dirname
 
-_server.inject '/resources/index.html', (res) ->
-  console.debug 'status: %s', res.statusCode
+  _server = new _Hapi.Server('localhost', 8080, { tls: tlsOptions, files: files })
+  _server.route
+    method: 'GET'
+    path: '/resources/{path*}'
+    handler:
+      directory:
+        path: './resources'
+
+  _server.on 'close', (err, res) ->
+    console.debug 'close'
+
+  _server.start ->
+    console.log('Server running at:', _server.info.uri)
+
+  _server.inject '/resources/index.html', (res) ->
+    console.debug 'status: %s', res.statusCode
+
+module.exports = LocalHttpsServer
