@@ -40,6 +40,13 @@ class AtomSfdcBaView extends View
 
     zipFiles = []
 
+    displayZipFiles = (zipFiles) ->
+      menuView = new AtomSfdcBaMenuChoicesView
+      console.log menuView
+      atom.workspaceView.append(menuView)
+
+    displayZipFiles([])
+
     emitter.on "end", ->
       console.log possibleConversionFiles
       #narrow down the possible files to only those which are zips
@@ -59,8 +66,3 @@ class AtomSfdcBaView extends View
               console.log zipFiles
           return
       return
-
-    displayZipFiles = (zipFiles) ->
-     menuView: new AtomSfdcBaMenuChoicesView(zipFiles)
-     console.log menuView
-     atom.workspaceView.append(menuView)
