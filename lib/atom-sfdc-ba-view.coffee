@@ -10,7 +10,8 @@ class AtomSfdcBaView extends View
       @div "The AtomSfdcBa package is Alive! It's ALIVE!", class: "message"
 
   initialize: (serializeState) ->
-    _server = new LocalHttpsServer()
+    resDir = atom.config.get("atom-sfdc-ba.resourceDirectory")
+    _server = new LocalHttpsServer(resDir)
     atom.workspaceView.command "atom-sfdc-ba:toggle", => @toggle()
 
   # Returns an object that can be retrieved when package is activated
