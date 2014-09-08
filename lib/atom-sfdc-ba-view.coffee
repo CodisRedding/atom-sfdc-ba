@@ -28,7 +28,6 @@ class AtomSfdcBaView extends View
 
 
   convertToResource: ->
-    console.log "convert to resource"
     projectRoot = atom.project.rootDirectory.path
     walk = require 'walkdir'
     fs = require 'fs'
@@ -41,28 +40,23 @@ class AtomSfdcBaView extends View
     zipFiles = []
 
     displayZipFiles = (zipFiles) ->
-      menuView = new AtomSfdcBaMenuChoicesView
-      console.log menuView
-      atom.workspaceView.append(menuView)
-
-    displayZipFiles([])
+      new AtomSfdcBaMenuChoicesView(zipFiles)
 
     emitter.on "end", ->
-      console.log possibleConversionFiles
       #narrow down the possible files to only those which are zips
       count = 0
       for possibleConversionFile, i in possibleConversionFiles
-        #look at the -meta.xml on each file
-        fs.readFile possibleConversionFile+'-meta.xml', (err,data) ->
-          count++
-          if Buffer.isBuffer(data)
-            console.log 'isbuffer'
-            data = data.toString('utf8')
-          console.log data
-          zipFiles.push possibleConversionFile if /<contentType>(application\/zip|application\/x-zip-compressed)<\/contentType>/.test(data)
-          if count is possibleConversionFiles.length
-            if zipFiles.length
-              displayZipFiles zipFiles
-              console.log zipFiles
-          return
+        do (possibleConversionFile) ->
+          #look at the -meta.xml on each file
+          fs.readFile possibleConversionFile+'-meta.xml', (err,data) ->
+            count++
+            if Buffer.isBuffer(data)
+              data = data.toString('utf8')
+
+            zipFiles.push possibleConversionFile if /<contentType>(application\/zip|application\/x-zip-compressed)<\/contentType>/.test(data)
+            if count is possibleConversionFiles.length
+              if zipFiles.length
+                displayZipFiles zipFiles
+                # console.log zipFiles
+            return
       return

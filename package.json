@@ -10,6 +10,7 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
-    "walkdir": "0.0.7"
+    "walkdir": "0.0.7",
+    "adm-zip": "0.4.4"
   }
 }
