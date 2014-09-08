@@ -1,15 +1,16 @@
 {View} = require 'atom'
+LocalHttpsServer = require './local-https-server'
 
 module.exports =
 class AtomSfdcBaView extends View
+  _server = null
 
   @content: ->
     @div class: 'atom-sfdc-ba overlay from-top', =>
       @div "The AtomSfdcBa package is Alive! It's ALIVE!", class: "message"
 
   initialize: (serializeState) ->
-    #allowUnsafeNewFunction ->
-    #  _Hapi ?= require 'hapi'
+    _server = new LocalHttpsServer()
     atom.workspaceView.command "atom-sfdc-ba:toggle", => @toggle()
 
   # Returns an object that can be retrieved when package is activated
@@ -24,4 +25,5 @@ class AtomSfdcBaView extends View
     if @hasParent()
       @detach()
     else
+      _server.start()
       atom.workspaceView.append(this)
