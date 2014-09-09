@@ -10,7 +10,7 @@ describe "AtomSfdcBa", ->
   activationPromise = null
 
   beforeEach ->
-    atom.workspaceView = new WorkspaceView
+    atom.workspaceView = new WorkspaceView()
     activationPromise = atom.packages.activatePackage('atom-sfdc-ba')
 
   describe "when the atom-sfdc-ba:toggle event is triggered", ->

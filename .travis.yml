@@ -7,6 +7,6 @@ notifications:
 
   irc:
     channels:
-      - "chat.freenode.net#atom-sfdc-ba"
+      - "irc.freenode.net#atom-sfdc-ba"
 
 script: 'curl -s https://raw.githubusercontent.com/atom/ci/master/build-package.sh | sh'
