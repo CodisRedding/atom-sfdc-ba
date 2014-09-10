@@ -24,6 +24,8 @@ class AtomSfdcBaView extends View
   toggle: ->
     console.log "AtomSfdcBaView was toggled!"
     if @hasParent()
+      if _server
+        _server.stop()
       @detach()
     else
       _server.start()

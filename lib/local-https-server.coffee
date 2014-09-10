@@ -4,7 +4,7 @@ path = require 'path'
 file = require 'file'
 Promise = require 'bluebird'
 fs = require 'fs'
-portFinder = Promise.promisifyAll(require 'portfinder')
+portscanner = Promise.promisifyAll(require 'portscanner')
 
 module.exports =
 class LocalHttpsServer
@@ -23,9 +23,9 @@ class LocalHttpsServer
     if _server
       _server.stop ->
         console.log 'Server stopped'
-        
+
   start: ->
-    portFinder.getPortAsync()
+    portscanner.findAPortNotInUseAsync(8000, 9000, '127.0.0.1')
       .then((port) ->
         # create new server
         options = _configureServerOptions()
