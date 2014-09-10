@@ -9,15 +9,14 @@ fs = require 'fs'
 
 module.exports =
 class LocalHttpsServer
-  _server: null
-
-  _Hapi = null
-  _cert = null
-  _key = null
-  _resourceDir = null
-  _projectPath = null
+  _Hapi = undefined
+  _cert = undefined
+  _key = undefined
+  _resourceDir = undefined
+  _projectPath = undefined
 
   constructor: (projectPath, resourceDir) ->
+    _server = undefined
     _projectPath = projectPath
     _resourceDir = resourceDir
     _key = path.normalize("#{__dirname}/../cert/server.key")
@@ -25,6 +24,9 @@ class LocalHttpsServer
     allowUnsafeNewFunction ->
       _Hapi ?= require 'hapi'
     Promise.promisifyAll(_Hapi.Server.prototype)
+
+  getServer: ->
+    _server
 
   stop: ->
     _server?.stop()

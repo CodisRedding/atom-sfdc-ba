@@ -31,6 +31,7 @@ describe 'LocalHttpsServer', ->
     server?.stop()
 
   it 'multiple servers should have unique ports', ->
+
     port1 = undefined
     port2 = undefined
     server1Done = false
