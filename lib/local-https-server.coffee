@@ -3,12 +3,19 @@ keypair = require 'self-signed'
 path = require 'path'
 file = require 'file'
 Promise = require 'bluebird'
+
 fs = require 'fs'
-portscanner = Promise.promisifyAll(require 'portscanner')
+
 
 module.exports =
 class LocalHttpsServer
-  [_Hapi, _key, _cert, _resourceDir, _server, _projectPath] = []
+  _server: null
+
+  _Hapi = null
+  _cert = null
+  _key = null
+  _resourceDir = null
+  _projectPath = null
 
   constructor: (projectPath, resourceDir) ->
     _projectPath = projectPath
@@ -20,34 +27,31 @@ class LocalHttpsServer
     Promise.promisifyAll(_Hapi.Server.prototype)
 
   stop: ->
-    if _server
-      _server.stop ->
-        console.log 'Server stopped'
+    _server?.stop()
+    console.log 'Server stopped'
 
   start: ->
-    portscanner.findAPortNotInUseAsync(8000, 9000, '127.0.0.1')
-      .then((port) ->
-        # create new server
-        options = _configureServerOptions()
-        _server = new _Hapi.Server('localhost', port, options)
+    # create new server
+    options = _configureServerOptions()
+    _server = new _Hapi.Server('localhost', 0, options)
 
-        # configure resource route
-        _server.route
-          method: 'GET'
-          path: "/#{_resourceDir}/{path*}"
-          handler:
-            directory:
-              path: "./#{_resourceDir}"
+    # configure resource route
+    _server.route
+      method: 'GET'
+      path: "/#{_resourceDir}/{path*}"
+      handler:
+        directory:
+          path: "./#{_resourceDir}"
 
-        # log when server ends
-        _server.on 'close', (err, res) ->
-          console.debug 'close'
+    # log when server ends
+    _server.on 'close', (err, res) ->
+      console.debug 'close'
 
-        # start server
-        return _server.startAsync().then ->
-          console.log 'Server running at: ', _server.info.uri
-          return _server
-      )
+    # start server
+    _server.startAsync().then ->
+      console.log '_server.info.port: ', _server.info.port
+      console.log 'Server running at: ', _server.info.uri
+      return _server
 
   _configureServerOptions = ->
     tlsOptions = []
