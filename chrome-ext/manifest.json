@@ -1,6 +1,6 @@
 {
 	"manifest_version": 2,
-	"name": "atom-sfdc-ba",
+	"name": "Atom SFDC BA",
 	"version": "1.0",
 	"description": "Replaces remote resources with localhost.",
 	"content_scripts":

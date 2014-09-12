@@ -29,22 +29,8 @@ class AtomSfdcBaView extends View
       #_server?.stop()
       @detach()
     else
-      PageLocaliser ?= require './page-localiser'
-      PageLocaliser.launchit 'https://staging-gbhem.cs10.force.com/pastoralacts'
-      #_server.start()
+      _server.start().done (srv) ->
+        PageLocaliser ?= require './page-localiser'
+        PageLocaliser.launchit "https://staging-gbhem.cs10.force.com/pastoralacts?port=#{srv.info.port}"
 
-      #PageLocaliser.replaceCss("<html><ol></ol>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.bootstrapCss)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.LibraryJS, '/base/subdir/file.js')}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.seminarymapstyle)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.bootstrapCss)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.bootstrapCss)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.bootstrapCss)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.myZipFile, imageVar)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.bootstrapCss)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.bootstrapCss)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.bootstrapCss)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.myZipFile, imageVar)}\"/>
-      #  <apex:stylesheet value=\"{!URLFOR($Resource.bootstrapCss)}\"/>
-      #  </html>")
       atom.workspaceView.append(this)
