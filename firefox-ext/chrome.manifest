@@ -1,0 +1,3 @@
+content	atom-sfdc-ba	chrome/content/	contentaccessible=yes
+
+overlay	chrome://browser/content/browser.xul	chrome://atom-sfdc-ba/content/main.xul
