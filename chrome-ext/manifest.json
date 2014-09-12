@@ -1,0 +1,14 @@
+{
+	"manifest_version": 2,
+	"name": "atom-sfdc-ba",
+	"version": "1.0",
+	"description": "Replaces remote resources with localhost.",
+	"content_scripts":
+	[
+		{
+			"matches": ["*://*/*"],
+			"js": ["jquery.js", "content_script.js"],
+			"run_at": "document_end"
+		}
+	]
+}
