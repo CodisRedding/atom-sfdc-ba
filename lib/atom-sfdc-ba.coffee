@@ -9,6 +9,7 @@ module.exports =
     securityToken: null
     apiVersion: 'xx.x'
     resourceDirectory: 'resource-bundles'
+    sfdcInstance: 'na11'
 
   activate: (state) ->
     @atomSfdcBaView = new AtomSfdcBaView(state.atomSfdcBaViewState)
