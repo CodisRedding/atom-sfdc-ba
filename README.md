@@ -1,5 +1,5 @@
-[![Coverage Status](https://img.shields.io/coveralls/mtetlow/atom-sfdc-ba.svg)](https://coveralls.io/r/mtetlow/atom-sfdc-ba)
-[![Build Status](https://travis-ci.org/mtetlow/atom-sfdc-ba.svg)](https://travis-ci.org/mtetlow/atom-sfdc-ba.svg)
+[![Coverage Status](https://img.shields.io/coveralls/fourq/atom-sfdc-ba.svg)](https://coveralls.io/r/fourq/atom-sfdc-ba)
+[![Build Status](https://travis-ci.org/fourq/atom-sfdc-ba.svg)](https://travis-ci.org/fourq/atom-sfdc-ba.svg)
 
 # atom-sfdc-ba package
 
