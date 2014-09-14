@@ -3,11 +3,16 @@
 	"name": "Atom SFDC BA",
 	"version": "1.0",
 	"description": "Replaces remote resources with localhost.",
+	"background": { "scripts": ["background.js"] },
+	"browser_action": {
+    "default_icon": "icon-on.png",
+		"default_title": "Atom SFDC BA"
+  },
 	"content_scripts":
 	[
 		{
 			"matches": ["*://*/*"],
-			"js": ["jquery.js", "content_script.js"],
+			"js": ["jquery.js", "content-script.js"],
 			"run_at": "document_end"
 		}
 	]

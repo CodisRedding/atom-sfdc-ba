@@ -35,15 +35,23 @@ class AtomSfdcBaView extends View
   toggle: ->
     console.log "AtomSfdcBaView was toggled!"
     if @hasParent()
-      #_server?.stop()
+      _server?.stop()
       @detach()
     else
       _server.start().done (srv) ->
         _salesforce.login (err, res) ->
           return console.error err if err
 
-          _sid = _salesforce.getSessionId()
           PageLocaliser ?= require './page-localiser'
-          PageLocaliser.launchit "https://staging-gbhem.cs10.force.com/pastoralacts?port=#{srv.info.port}&rd=#{escape(_resDir)}&api=#{escape(_apiVersion)}&pod=#{escape(_pod)}&sid=#{escape(_sid)}"
+          settings =
+            "port": srv.info.port
+            "resourceDir": _resDir
+            "api": _apiVersion
+            "pod": _pod
+            "sid": _salesforce.getSessionId()
+
+          param = escape(JSON.stringify(settings))
+          PageLocaliser.launchit "https://staging-gbhem.cs10.force.com/pastoralacts?p=#{param}"
+          # PageLocaliser.launchit "https://staging-gbhem.cs10.force.com/pastoralacts?port=#{srv.info.port}&rd=#{escape(_resDir)}&api=#{escape(_apiVersion)}&pod=#{escape(_pod)}&sid=#{escape(_sid)}"
 
       atom.workspaceView.append(this)
